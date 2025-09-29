@@ -1,0 +1,4 @@
+robotframework-requests
+flask
+PyJWT
+invoke
