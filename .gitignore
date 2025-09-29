@@ -1,0 +1,61 @@
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+Pipfile.lock
+poetry.lock
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs
+*.log
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------
+# Robot Framework
+# -----------------------
+# Output files
+output.xml
+report.html
+log.html
+debug.log
+
+# Custom output dirs (nếu bạn chỉ định)
+results/
+reports/
+logs/
+
+# Robot caches
+*.rdb
+
+# -----------------------
+# Misc
+# -------
