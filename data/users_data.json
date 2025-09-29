@@ -1,0 +1,25 @@
+{
+  "get_all_users_with_admin_role": {
+    "expected_data": [
+      {
+        "id": 1,
+        "username": "admin",
+        "password": "123",
+        "role": "admin"
+      },
+      {
+        "id": 2,
+        "username": "user1",
+        "password": "abc",
+        "role": "user"
+      }
+    ],
+    "status_code": 200
+  },
+  "get_all_users_with_user_role": {
+    "expected_data": {
+      "error": "Admin role required"
+    },
+    "status_code": 403
+  }
+}

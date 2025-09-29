@@ -1,0 +1,9 @@
+{
+  "health_check_endpoint": {
+    "expected_data": {
+      "status": "ok"
+    },
+    "ignore_keys": ["time"],
+    "status_code": 200
+  }
+}

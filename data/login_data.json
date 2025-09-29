@@ -1,0 +1,16 @@
+{
+  "valid_credentials": {
+    "expected_data": {
+      "username": "admin",
+      "role": "admin"
+    },
+    "ignore_keys": ["token"],
+    "status_code": 200
+  },
+  "invalid_credentials": {
+    "expected_data": {
+      "error": "Invalid credentials"
+    },
+    "status_code": 401
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "expired_token": {
+    "access_token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE3NTg5NjQ4NTF9.zmZqd8PFDnptjGsA_hKTsmwumC8nZdDFr4nP58733IM",
+    "expected_data": {
+      "error": "Token expired"
+    },
+    "status_code": 403
+  },
+  "invalid_token": {
+    "access_token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE3NTg5NjQ4NTF9",
+    "expected_data": {
+      "error": "Invalid token"
+    },
+    "status_code": 403
+  }
+}
