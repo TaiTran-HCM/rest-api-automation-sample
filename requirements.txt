@@ -2,3 +2,4 @@ robotframework-requests
 flask
 PyJWT
 invoke
+dotenv
