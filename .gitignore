@@ -51,6 +51,8 @@ debug.log
 # Custom output dirs (nếu bạn chỉ định)
 results/
 reports/
+results/*
+reports/*
 logs/
 
 # Robot caches
