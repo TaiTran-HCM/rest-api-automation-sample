@@ -1,5 +1,6 @@
-robotframework-requests
 flask
-PyJWT
 invoke
 dotenv
+robotframework-requests
+allure-robotframework
+robotframework_reportportal
