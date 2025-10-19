@@ -17,7 +17,6 @@ services:
       - rest-api-sample_api_test_net
     command: >
       bash -c "
-        echo $ENDPOINT
         echo '🔥 Starting smoke tests...' &&
         inv smoke &&
         echo '✅ Smoke tests passed. Running regression tests...' &&
