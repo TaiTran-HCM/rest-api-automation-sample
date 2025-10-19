@@ -11,7 +11,6 @@ load_dotenv()
 ROOT = os.path.dirname(__file__)
 PYTHON_PATH = ROOT
 RESULTS_DIR = os.path.join(ROOT, "results")
-REPORTS_DIR = os.path.join(ROOT, "reports")
 PROJECT_NAME = os.path.basename(ROOT)
 DEFAULT_SUITE = f"{PROJECT_NAME}.tests"
 
@@ -66,15 +65,11 @@ def _build_rp_args(output_subdir: str, suite: str | None, timestamp: str) -> tup
 def _run_robot(c, opts: str, output_subdir: str, suite: str | None = None):
     """
     Helper chạy Robot Framework với PYTHONPATH, outputdir có timestamp,
-    tích hợp Allure và ReportPortal qua --variable.
+    chỉ tích hợp ReportPortal (không còn Allure).
     """
     timestamp = _timestamp()
     outdir = os.path.join(RESULTS_DIR, output_subdir, timestamp)
-    allure_results_dir = os.path.join(outdir, "allure-results")
-    allure_report_dir = os.path.join(REPORTS_DIR, "allure-report", output_subdir, timestamp)
-
-    _ensure_dir(allure_results_dir)
-    _ensure_dir(allure_report_dir)
+    _ensure_dir(outdir)
 
     tests = DEFAULT_SUITE if not suite else f"{DEFAULT_SUITE}.{suite}"
 
@@ -85,7 +80,6 @@ def _run_robot(c, opts: str, output_subdir: str, suite: str | None = None):
     cmd = (
         f"PYTHONPATH={PYTHON_PATH} "
         f"robot --outputdir {outdir} "
-        f"--listener allure_robotframework:{allure_results_dir} "
         f"{rp_args} "
         f"{opts} --suite {tests} ."
     )
@@ -97,13 +91,6 @@ def _run_robot(c, opts: str, output_subdir: str, suite: str | None = None):
 
     # Run tests
     c.run(cmd, pty=True)
-
-    # Generate Allure report
-    try:
-        c.run(f"allure generate {allure_results_dir} -o {allure_report_dir}", pty=True)
-        print(f"✅ Allure report generated: {allure_report_dir}")
-    except Exception as e:
-        print(f"⚠️  Failed to generate Allure report: {e}")
 
 
 # === Tasks ===
@@ -147,23 +134,6 @@ def prod(c):
     _env_run(c, ".env.prod", "prod")
 
 
-@task(help={"open_report": "Open report in browser after generating"})
-def allure(c, open_report=False):
-    """Mở report Allure gần nhất"""
-    report_base = os.path.join(REPORTS_DIR, "allure-report")
-    if not os.path.exists(report_base):
-        print("⚠️  No allure-report directory found")
-        return
-
-    latest_report_dir = max(
-        (os.path.join(report_base, d) for d in os.listdir(report_base)),
-        key=os.path.getmtime,
-    )
-    print(f"📂 Latest report: {latest_report_dir}")
-    if open_report:
-        c.run(f"allure open {latest_report_dir}", pty=True)
-
-
 @task
 def lint(c):
     """Run linting checks (flake8, black --check)"""
@@ -175,7 +145,7 @@ def lint(c):
 @task
 def clean(c):
     """Clean results and report directories"""
-    for path, name in [(RESULTS_DIR, "results"), (REPORTS_DIR, "reports")]:
+    for path, name in [(RESULTS_DIR, "results")]:
         if os.path.exists(path):
             shutil.rmtree(path)
             print(f"🗑️  Deleted {name} directory: {path}")

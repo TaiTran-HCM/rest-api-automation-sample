@@ -2,5 +2,4 @@ flask
 invoke
 dotenv
 robotframework-requests
-allure-robotframework
 robotframework_reportportal
