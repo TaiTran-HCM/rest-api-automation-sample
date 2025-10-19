@@ -1,7 +1,7 @@
 services:
   tester:
     image: rest-api-automation-sample:latest
-    container_name: ${TESTER_CONTAINER_NAME}
+    container_name: ${TEST_CONTAINER_NAME}
     working_dir: /test-app
     environment:
       ENDPOINT: ${ENDPOINT}
