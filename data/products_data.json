@@ -16,7 +16,7 @@
   },
   "get_all_products_without_token": {
     "expected_data": {
-      "error": "Missing token"
+      "error": "Missing Authorization header"
     },
     "status_code": 401
   },
