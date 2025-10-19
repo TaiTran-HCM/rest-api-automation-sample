@@ -1,0 +1,30 @@
+services:
+  tester:
+    image: rest-api-automation-sample:latest
+    container_name: ${TESTE_CONTAINER_NAME}
+    working_dir: /test-app
+    environment:
+      ENDPOINT: ${ENDPOINT}
+      RP_ENDPOINT: ${RP_ENDPOINT}
+      RP_API_KEY: ${RP_API_KEY}
+      RP_LAUNCH: ${RP_LAUNCH}
+      RP_DESCRIPTION: ${RP_DESCRIPTION}
+      LOG_LEVEL: ${LOG_LEVEL}
+      RP_PROJECT: ${RP_PROJECT}
+      TEST_ENV: ${TEST_ENV}
+      GIT_BRANCH: ${GIT_BRANCH}
+    env_file:
+      - .env
+    networks:
+      - rest-api-sample_api_test_net
+    command: >
+      bash -c "
+        echo $ENDPOINT
+        echo '🔥 Starting smoke tests...' &&
+        inv smoke &&
+        echo '✅ Smoke tests passed. Running regression tests...' &&
+        inv regression
+      "
+networks:
+  rest-api-sample_api_test_net:
+    external: true
