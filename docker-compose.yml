@@ -13,6 +13,8 @@ services:
       RP_PROJECT: ${RP_PROJECT}
       TEST_ENV: ${TEST_ENV}
       GIT_BRANCH: ${GIT_BRANCH}
+    env_file:
+      - .env
     networks:
       - reportportal
     command: >
