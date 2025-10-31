@@ -3,3 +3,5 @@ invoke
 dotenv
 robotframework-requests
 robotframework_reportportal
+flake8
+black

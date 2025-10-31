@@ -21,6 +21,7 @@ RP_PROJECT = os.getenv("RP_PROJECT")
 RP_TEST_ENV = os.getenv("TEST_ENV", "local")
 RP_GIT_BRANCH = os.getenv("GIT_BRANCH", "main")
 
+
 # === Helper Functions ===
 def _timestamp() -> str:
     """Trả về timestamp định dạng yyyy-mm-dd_HH-MM-SS"""
@@ -39,7 +40,9 @@ def _ensure_dir(path: str):
     os.makedirs(path, exist_ok=True)
 
 
-def _build_rp_args(output_subdir: str, suite: str | None, timestamp: str) -> tuple[str, str, str]:
+def _build_rp_args(
+    output_subdir: str, suite: str | None, timestamp: str
+) -> tuple[str, str, str]:
     """Tạo argument cho ReportPortal"""
     safe_output = re.sub(r"[/\s]+", "_", output_subdir)
     safe_suite = re.sub(r"[/\s]+", "_", suite or "all")
@@ -53,13 +56,17 @@ def _build_rp_args(output_subdir: str, suite: str | None, timestamp: str) -> tup
         f"build:{timestamp}"
     )
     return (
-        f"--listener robotframework_reportportal.listener "
-        f"--variable RP_API_KEY:{_safe_env('RP_API_KEY', RP_API_KEY)} "
-        f"--variable RP_ENDPOINT:{_safe_env('RP_ENDPOINT', RP_ENDPOINT)} "
-        f"--variable RP_LAUNCH:{rp_launch_name} "
-        f"--variable RP_PROJECT:{_safe_env('RP_PROJECT', RP_PROJECT)} "
-        f"--variable RP_LAUNCH_ATTRIBUTES:\"{rp_launch_attributes}\""
-    ), rp_launch_name, rp_launch_attributes
+        (
+            f"--listener robotframework_reportportal.listener "
+            f"--variable RP_API_KEY:{_safe_env('RP_API_KEY', RP_API_KEY)} "
+            f"--variable RP_ENDPOINT:{_safe_env('RP_ENDPOINT', RP_ENDPOINT)} "
+            f"--variable RP_LAUNCH:{rp_launch_name} "
+            f"--variable RP_PROJECT:{_safe_env('RP_PROJECT', RP_PROJECT)} "
+            f'--variable RP_LAUNCH_ATTRIBUTES:"{rp_launch_attributes}"'
+        ),
+        rp_launch_name,
+        rp_launch_attributes,
+    )
 
 
 def _run_robot(c, opts: str, output_subdir: str, suite: str | None = None):
@@ -74,7 +81,9 @@ def _run_robot(c, opts: str, output_subdir: str, suite: str | None = None):
     tests = DEFAULT_SUITE if not suite else f"{DEFAULT_SUITE}.{suite}"
 
     # Tạo ReportPortal arguments
-    rp_args, rp_launch_name, rp_launch_attributes = _build_rp_args(output_subdir, suite, timestamp)
+    rp_args, rp_launch_name, rp_launch_attributes = _build_rp_args(
+        output_subdir, suite, timestamp
+    )
 
     # Build robot command
     cmd = (
@@ -94,6 +103,7 @@ def _run_robot(c, opts: str, output_subdir: str, suite: str | None = None):
 
 
 # === Tasks ===
+
 
 @task(help={"tags": "Optional: filter tests by tags (comma-separated)"})
 def test(c, tags=None):
@@ -138,7 +148,7 @@ def prod(c):
 def lint(c):
     """Run linting checks (flake8, black --check)"""
     print("🧹 Running lint checks...")
-    c.run("flake8 .", pty=True)
+    c.run(f"flake8 {ROOT}/tasks.py", pty=True)
     c.run("black --check .", pty=True)
 
 
