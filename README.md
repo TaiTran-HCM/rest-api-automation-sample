@@ -1,4 +1,3 @@
-(empty)
 # REST API Automation Sample
 
 Lightweight Robot Framework based REST API automation sample. The project contains Robot tests, supporting keywords/resources, environment-specific variable files and convenience tasks to run smoke and regression suites locally or inside Docker. It also integrates with ReportPortal for test reporting.
@@ -123,7 +122,4 @@ Feel free to open issues or submit pull requests. Keep tests deterministic and a
 
 ## License
 
-This repository does not include a license file. Add one if you intend to make the project public.
-
----
-Generated: a concise README for running Robot Framework REST API tests with optional ReportPortal reporting.
+This project is licensed under the MIT License — see the `LICENSE` file for details.
